@@ -111,8 +111,8 @@ class AETrainer(BaseTrainer):
         labels = np.array(labels)
         scores = np.array(scores)
 
-        auc = roc_auc_score(labels, scores)
-        logger.info('Test set AUC: {:.2f}%'.format(100. * auc))
+        # auc = roc_auc_score(labels, scores)
+        # logger.info('Test set AUC: {:.2f}%'.format(100. * auc))
 
         test_time = time.time() - start_time
         logger.info('Autoencoder testing time: %.3f' % test_time)

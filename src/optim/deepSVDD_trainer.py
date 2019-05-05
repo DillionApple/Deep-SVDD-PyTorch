@@ -150,6 +150,9 @@ class DeepSVDDTrainer(BaseTrainer):
         self.test_auc = roc_auc_score(labels, scores)
         logger.info('Test set AUC: {:.2f}%'.format(100. * self.test_auc))
 
+        logger.info('Labels: {0}'.format(labels))
+        logger.info('Scores: {0}'.format(scores))
+
         logger.info('Finished testing.')
 
     def init_center_c(self, train_loader: DataLoader, net: BaseNet, eps=0.1):

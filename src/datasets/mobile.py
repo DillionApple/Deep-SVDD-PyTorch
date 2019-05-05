@@ -54,22 +54,25 @@ class Mobile(Dataset):
     """Torchvision CIFAR10 class with patch of __getitem__ method to also return the index of a data sample."""
 
     def __load_images_from_path(self, root):
-        ret = []
-        for file in os.listdir(root):
-            filename = os.fsdecode(file)
-            filepath = os.path.join(root, filename)
-            img = Image.open(filepath).resize((256, 256)).convert("L")
-            ret.append(img)
-        return ret
+        imgs = []
+        labels = []
+        for parent_dir, dirs, files in os.walk(root):
+            for filename in files:
+                if (filename.startswith("neg")):
+                    labels.append(1)
+                else:
+                    labels.append(0)
+                filepath = os.path.join(parent_dir, filename)
+                img = Image.open(filepath).resize((256, 256)).convert("L")
+                imgs.append(img)
+        return imgs, labels
 
     def __init__(self, train_root, test_root, transform, train):
         self.transform = transform
 
-        self.train_data = self.__load_images_from_path(train_root)
-        self.train_labels = [0 for i in range(len(self.train_data))]
+        self.train_data, self.train_labels = self.__load_images_from_path(train_root)
 
-        self.test_data = self.__load_images_from_path(test_root)
-        self.test_labels = [1 for i in range(len(self.test_data))]
+        self.test_data, self.test_labels = self.__load_images_from_path(test_root)
 
         self.train = train
 

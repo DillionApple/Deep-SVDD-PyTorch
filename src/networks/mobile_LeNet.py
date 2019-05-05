@@ -19,7 +19,7 @@ class Mobile_LeNet(BaseNet):
         self.bn2d2 = nn.BatchNorm2d(64, eps=1e-04, affine=False)
         self.conv3 = nn.Conv2d(64, 128, 5, bias=False, padding=2)
         self.bn2d3 = nn.BatchNorm2d(128, eps=1e-04, affine=False)
-        self.fc1 = nn.Linear(112640, self.rep_dim, bias=False)
+        self.fc1 = nn.Linear(131072, self.rep_dim, bias=False)
 
     def forward(self, x):
         x = self.conv1(x)
@@ -38,7 +38,7 @@ class Mobile_LeNet_Autoencoder(BaseNet):
     def __init__(self):
         super().__init__()
 
-        self.rep_dim = 8192
+        self.rep_dim = 1024
         self.pool = nn.MaxPool2d(2, 2)
 
         # Encoder (must match the Deep SVDD network above)
